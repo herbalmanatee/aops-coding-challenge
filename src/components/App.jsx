@@ -12,6 +12,7 @@ const Page = styled.div`
 `
 
 const Sidebar = styled.div`
+  margin-left: 25px;
   grid-area: settings;
 `
 const Main = styled.div`
