@@ -31,24 +31,3 @@
   Sample Output: LRLL
 */
 
-//function takes array of integers
-//returns matrix of integers with pyramid dimensions
-let makeMatrix = (arr) => {
-  let row = 1; //represents the length of the pyramid row
-  let matrix = [];
-
-  while (arr.length > 0) {
-    matrix.push(arr.splice(0,row))
-    row++;
-  }
-
-  return matrix;
-}
-
-
-let test = () => {
-  console.log(makeMatrix([1,2,3,4,1,1]));
-  console.log(makeMatrix([2,4,3,3,2,6,2,9,5,2,10,5,2,15,5]))
-}
-
-test();
