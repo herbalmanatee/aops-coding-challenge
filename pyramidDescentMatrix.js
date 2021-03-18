@@ -52,18 +52,17 @@ let solver = (target, arr) => {
   let solution = '';
 
   let descendPyramid = (row, product, index, path, move) => {
-    //debugger;
+
     if (row > 0) {
       path.push(move);
     }
-
     product *= matrix[row][index];
 
     if (product > target) { // this is uneccesary but will improve time complexity in some situations, particularly large pyramids
       return false;
     }
 
-    //debugger;
+
     if (row === matrix.length - 1) {
       if (product === target) {
         solution = path.join('');
