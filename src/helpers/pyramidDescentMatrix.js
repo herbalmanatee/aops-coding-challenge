@@ -31,27 +31,18 @@
   Sample Output: LRLL
 */
 
-//function takes array of integers
-//returns matrix of integers with pyramid dimensions
-let makeMatrix = (arr) => {
-  let row = 1; //represents the length of the pyramid row
-  let matrix = [];
-
-  while (arr.length > 0) {
-    matrix.push(arr.splice(0,row));
-    row++;
-  }
-
-  return matrix;
-}
-
-
-let solver = (target, arr) => {
-  let matrix = makeMatrix(arr);
-
+let solver = (target, matrix) => {
+  //let matrix = makeMatrix(arr);
   let solution = '';
+  let pathSnapshots = []; //this holds snapshots of the path that the algorithm takes -> needed for visualization
 
   let descendPyramid = (row, product, index, path, move) => {
+
+    let currentPlace = `row${row}slot${index}`;
+    let newSnapshot = pathSnapshots.slice()
+    newSnapshot.push(currentPlace);
+    pathSnapshots.push(newSnapshot);
+    console.log(pathSnapshots);
 
     if (row > 0) {
       path.push(move);
@@ -88,20 +79,28 @@ let solver = (target, arr) => {
      }
 
     }
-
   }
 
   descendPyramid(0, 1, 0, []);
-  return solution;
+  return [solution, pathSnapshots];
 }
 
-let test = () => {
-  // console.log(makeMatrix([1,2,3,4,1,1]));
-  // console.log(makeMatrix([2,4,3,3,2,6,2,9,5,2,10,5,2,15,5]))
-  console.log(solver(2, [1,2,3,4,1,1]));
-  console.log(solver(720, [2,4,3,3,2,6,2,9,5,2,10,5,2,15,5]));
-  console.log(solver(1, [1,2,1,3,2,1,4,3,2,1,5,4,3,2,1,6,5,4,3,2,1,7,6,5,4,3,2,1,8,7,6,5,4,3,1,2]));
-  console.log(solver(1, [1,2,1,3,2,1,4,3,2,1,5,4,3,2,1,6,5,4,3,2,1,7,6,5,4,3,2,1,8,7,6,5,4,3,2,1]));
-}
+export default solver;
 
-test();
+
+
+
+
+
+
+
+// let test = () => {
+//   // console.log(makeMatrix([1,2,3,4,1,1]));
+//   // console.log(makeMatrix([2,4,3,3,2,6,2,9,5,2,10,5,2,15,5]))
+//   console.log(solver(2, [1,2,3,4,1,1]));
+//   console.log(solver(720, [2,4,3,3,2,6,2,9,5,2,10,5,2,15,5]));
+//   console.log(solver(1, [1,2,1,3,2,1,4,3,2,1,5,4,3,2,1,6,5,4,3,2,1,7,6,5,4,3,2,1,8,7,6,5,4,3,1,2]));
+//   console.log(solver(1, [1,2,1,3,2,1,4,3,2,1,5,4,3,2,1,6,5,4,3,2,1,7,6,5,4,3,2,1,8,7,6,5,4,3,2,1]));
+// }
+
+// test();

@@ -2,6 +2,7 @@ import React from 'react';
 import Settings from './Settings.jsx';
 import Pyramid from './Pyramid.jsx';
 import styled from 'styled-components';
+import generatePyramid from '../helpers/generatePyramid';
 
 const Page = styled.div`
   display: grid;
@@ -31,8 +32,26 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      placeholder: true
+      rows: 3,
+      matrix: [[1], [2,3], [4,5,6]]
     }
+
+    this.setRows = this.setRows.bind(this);
+    this.getPyramid = this.getPyramid.bind(this);
+  }
+
+  setRows (rows) {
+    this.setState({
+      rows: rows
+    })
+    this.getPyramid(rows);
+  }
+
+  getPyramid (rows) {
+    let pyramidInput = generatePyramid(rows);
+    this.setState({
+      matrix: pyramidInput
+    })
   }
 
   render() {
@@ -41,10 +60,10 @@ class App extends React.Component {
       <Page>
         <Title>Pyramid Descent Algorithm Visualizer</Title>
         <Sidebar>
-          <Settings />
+          <Settings setRows={this.setRows} />
         </Sidebar>
         <Main>
-          <Pyramid />
+          <Pyramid matrix={this.state.matrix} rows={this.state.rows}/>
         </Main>
       </Page>
     )
