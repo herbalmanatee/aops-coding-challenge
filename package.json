@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "server-dev": "nodemon server",
-    "webpack": "webpack -w --mode=development"
+    "webpack": "webpack -w --mode=development",
+    "start": "node server"
   },
   "author": "",
   "license": "ISC",

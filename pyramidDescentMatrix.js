@@ -66,6 +66,7 @@ let solver = (target, arr) => {
     if (row === matrix.length - 1) {
       if (product === target) {
         solution = path.join('');
+
         return true;
       } else {
         return false;

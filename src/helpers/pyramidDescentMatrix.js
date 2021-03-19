@@ -35,14 +35,12 @@ let solver = (target, matrix) => {
   //let matrix = makeMatrix(arr);
   let solution = '';
   let pathSnapshots = []; //this holds snapshots of the path that the algorithm takes -> needed for visualization
+  let solutionSnapshot = [];
 
   let descendPyramid = (row, product, index, path, move) => {
-
+    //debugger;
     let currentPlace = `row${row}slot${index}`;
-    let newSnapshot = pathSnapshots.slice()
-    newSnapshot.push(currentPlace);
-    pathSnapshots.push(newSnapshot);
-    console.log(pathSnapshots);
+    pathSnapshots.push(currentPlace);
 
     if (row > 0) {
       path.push(move);
@@ -50,6 +48,7 @@ let solver = (target, matrix) => {
     product *= matrix[row][index];
 
     if (product > target) { // this is uneccesary but will improve time complexity in some situations, particularly large pyramids
+      pathSnapshots.push(currentPlace);
       return false;
     }
 
@@ -57,8 +56,10 @@ let solver = (target, matrix) => {
     if (row === matrix.length - 1) {
       if (product === target) {
         solution = path.join('');
+        solutionSnapshot = pathSnapshots;
         return true;
       } else {
+        pathSnapshots.push(currentPlace);
         return false;
       }
     }
@@ -75,6 +76,7 @@ let solver = (target, matrix) => {
      if (descendPyramid(row+1, product, index, path, direction)) {
        return;
      } else {
+       //pathSnapshots.push(currentPlace);
        path.pop();
      }
 
@@ -82,7 +84,8 @@ let solver = (target, matrix) => {
   }
 
   descendPyramid(0, 1, 0, []);
-  return [solution, pathSnapshots];
+
+  return [solution, solutionSnapshot];
 }
 
 export default solver;

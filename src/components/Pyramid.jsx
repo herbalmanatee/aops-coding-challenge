@@ -4,7 +4,7 @@ import generatePyramid from '../helpers/generatePyramid';
 import solver from '../helpers/pyramidDescentMatrix';
 
 const PyramidDiv = styled.div`
-  font-size: 40px;
+  font-size: 60px;
   margin-left: 50%
 `
 /*
@@ -24,19 +24,58 @@ class Pyramid extends React.Component {
     }
 
     this.solvePyramid = this.solvePyramid.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.toggleInteger = this.toggleInteger.bind(this);
 
   }
 
+  handleSubmit(event) {
+    event.preventDefault();
+    this.solvePyramid();
+  }
+
+  toggleInteger (int) {
+    if (int.style.color) {
+      int.style.color = ''
+    } else {
+      int.style.color = 'green'
+    }
+  }
+
   solvePyramid () {
-    solver(10, this.props.matrix);
+    console.log('here');
+
+    //generate a random solution
+    let product = 1;
+    let rowIndex=0
+    this.props.matrix.forEach((row) => {
+      product *= row[rowIndex];
+      rowIndex++
+    })
+
+    let solution = solver(product, this.props.matrix);
+    let path = solution[0];
+    console.log(product);
+    console.log(path);
+    let snapshots = solution[1];
+    console.log(snapshots);
+
+    snapshots.forEach((snap, i) => {
+      setTimeout(() => {
+
+        //document.getElementById(snap).style='color:#f00';
+        this.toggleInteger(document.getElementById(snap));
+      }, 500*i)
+    })
   }
 
   render() {
     let matrix = this.props.matrix
     //debugger;
-    this.solvePyramid();
+    //this.solvePyramid();
     return(
       <PyramidDiv rows={this.props.rows}>
+        <button type="button" onClick={this.handleSubmit}></button>
         {matrix.map((row, rowIndex) => {
           return <div id={`row${rowIndex}`} key={rowIndex}>
             {row.map((int, intIndex) => {
